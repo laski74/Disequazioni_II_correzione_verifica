@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correzione Verifica: Disequazioni di Secondo Grado</title>
+    
+    <!-- Config per MathJax -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        },
+        svg: {fontCache: 'global'}
+      };
+    </script>
+    <!-- Caricamento libreria Matematica -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding-bottom: 80px; /* Spazio per footer riassuntivo */
+            color: var(--text-color);
+        }
+
+        /* Menu di Navigazione */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background-color: var(--accent-color);
+        }
+
+        /* Contenuto */
+        .container {
+            max-width: 900px;
+            margin: 80px auto 20px;
+            padding: 20px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1, h2 {
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        h3 {
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 5px;
+        }
+
+        /* Card Esercizi */
+        .exercise-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .exercise-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2980b9;
+        }
+
+        .problem-text {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        /* Immagini */
+        .graph-container {
+            text-align: center;
+            margin: 15px 0;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            border: 1px dashed #ccc;
+        }
+        .graph-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .graph-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+            color: #555;
+        }
+
+        /* Soluzioni a scomparsa */
+        details {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--accent-color);
+            padding: 5px;
+            outline: none;
+        }
+
+        summary:hover {
+            color: #2980b9;
+        }
+
+        .solution-step {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            border-left: 3px solid #27ae60;
+        }
+
+        .tip-box {
+            background-color: #e8f6f3;
+            border: 1px solid #a2d9ce;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            color: #16a085;
+        }
+
+        /* Riepilogo Tabella */
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+        }
+        .summary-table th, .summary-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .summary-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #c0392b;
+        }
+
+        /* Footer fisso riassuntivo */
+        .fixed-summary-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #34495e;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+        }
+        .fixed-summary-bar a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menu Fisso -->
+    <nav class="navbar">
+        <button class="nav-btn active" onclick="openTab('tabA')">Verifica A</button>
+        <button class="nav-btn" onclick="openTab('tabB')">Verifica B</button>
+        <button class="nav-btn" onclick="openTab('tabSummary')">Riepilogo Soluzioni</button>
+    </nav>
+
+    <div class="container">
+
+        <!-- ==================== VERIFICA A ==================== -->
+        <div id="tabA" class="tab-content active">
+            <h1>Verifica: Disequazioni di Secondo Grado (A)</h1>
+            <p style="text-align: center; color: #7f8c8d;">Correzione commentata e svolgimento passo-passo.</p>
+
+            <!-- Esercizio 1 -->
+            <div class="exercise-card">
+                <div class="exercise-title">Esercizio 1 (1,5 punti)</div>
+                <div class="problem-text">Risolvi la disequazione: <br> $$ (3x - 2)^2 \leq 2 - x $$</div>
+                
+                <details>
+                    <summary>👇 Clicca qui per lo Svolgimento</summary>
+                    <div class="solution-step">
+                        <strong>1. Analisi:</strong> Abbiamo un quadrato di binomio. La strategia è sviluppare il quadrato e portare tutto al primo membro per ottenere una forma standard $ax^2 + bx + c \leq 0$.
+                    </div>
+                    <div class="solution-step">
+                        <strong>2. Sviluppo:</strong> 
+                        $$ 9x^2 - 12x + 4 \leq 2 - x $$
+                    </div>
+                    <div class="solution-step">
+                        <strong>3. Riordino:</strong> Sottraiamo $2 - x$ da entrambi i lati:
+                        $$ 9x^2 - 12x + x + 4 - 2 \leq 0 $$
+                        $$ 9x^2 - 11x + 2 \leq 0 $$
+                    </div>
+                    <div class="solution-step">
+                        <strong>4. Calcolo del $\Delta$ (Delta):</strong> 
+                        $$ \Delta = b^2 - 4ac = (-11)^2 - 4(9)(2) = 121 - 72 = 49 $$
+                        Poiché $\Delta > 0$, abbiamo due soluzioni reali.
+                    </div>
+                    <div class="solution-step">
+                        <strong>5. Calcolo delle radici:</strong> 
+                        $$ x = \frac{-b \pm \sqrt{\Delta}}{2a} = \frac{11 \pm 7}{18} $$
+                        $$ x_1 = \frac{11-7}{18} = \frac{4}{18} = \frac{2}{9} $$
+                        $$ x_2 = \frac{11+7}{18} = \frac{18}{18} = 1 $$
+                    </div>
+                    <div class="solution-step">
+                        <strong>6. Conclusione:</strong> Poiché la disequazione è "$\leq 0$" (minore o uguale) e $a > 0$ (parabola convessa), la soluzione è l'intervallo <strong>tra le due radici</strong> (chiuso).
+                        $$ \frac{2}{9} \leq x \leq 1 $$
+                    </div>
+                </details>
+                
+                <details>
+                    <summary>💡 Approfondimento</summary>
+                    <div class="tip-box">
+                        <strong>Errore comune:</strong> Dimenticare di cambiare segno quando si porta $-x$ al primo membro (diventa $+x$).<br>
+                        <strong>Regola:</strong> Per $ax^2 + bx + c \leq 0$ con $\Delta > 0$, la soluzione è sempre "interna" ($x_1 \le x \le x_2$).
+                    </div>
+                </details>
+            </div>
+
+            <!-- Esercizio 2 -->
+            <div class="exercise-card">
+                <div class="exercise-title">Esercizio 2 (2 punti)</div>
+                <div class="problem-text">Risolvi le disequazioni date, deducendo le soluzioni dai rispettivi grafici di funzione.</div>
+                
+                <div class="graph-container">
+                    <span class="graph-label">Grafico F1.png</span>
+                    <img src="F1.png" alt="Grafico funzione 1">
+                </div>
+                <details>
+                    <summary>👇 Soluzioni per F1.png</summary>
+                    <ul>
+                        <li><strong>a. $f(x) \leq 0$:</strong> $x \leq 1 \lor 2 \leq x \leq 3$</li>
+                        <li><strong>b. $f(x) > 1$:</strong> $x > \frac{10}{3}$</li>
+                        <li><strong>c. $0 < f(x) < 1$:</strong> $1 < x < 2 \lor 3 < x < \frac{10}{3}$</li>
+                        <li><strong>d. $f(x) < -2$:</strong> $x < \frac{1}{2}$</li>
+                    </ul>
+                </details>
+
+                <div class="graph-container" style="margin-top: 20px;">
+                    <span class="graph-label">Grafico F2.png</span>
+                    <img src="F2.png" alt="Grafico funzione 2">
+                </div>
+                <details>
+                    <summary>👇 Soluzioni per F2.png</summary>
+                    <ul>
+                        <li><strong>a. $f(x) \leq 0$:</strong> $\frac{1}{2} \leq x \leq 2$</li>
+                        <li><strong>b. $f(x) = \frac{5}{2}$:</strong> $x = -\frac{1}{2}$</li>
+                        <li><strong>c. $f(x) < \frac{5}{2}$:</strong> $x > -\frac{1}{2}$</li>
+                        <li><strong>d. $f(x) \geq -\frac{9}{16}$:</strong> Sempre vera</li>
+                    </ul>
+                </details>
+            </div>
+
+            <!-- Esercizio 3 -->
+            <div class="exercise-card">
+                <div class="exercise-title">Esercizio 3 (2 punti)</div>
+                <div class="problem-text">Risolvi la disequazione fratta: $$ \frac{4x^2 - 5x + 1}{5x - 6 - x^2} \geq 0 $$</div>
+                
+                <details>
+                    <summary>👇 Clicca qui per lo Svolgimento</summary>
+                    <div class="solution-step">
+                        <strong>1. Studio Numeratore:</strong> $(4x-1)(x-1) \geq 0$. Radici: $x_1 = 1/4$, $x_2 = 1$. Segno: Positivo fuori, Negativo dentro.
+                    </div>
+                    <div class="solution-step">
+                        <strong>2. Studio Denominatore:</strong> $-(x^2 - 5x + 6) = -(x-2)(x-3)$. Radici: $x=2, x=3$. Segno: Negativo fuori, Positivo dentro. (Attenzione al segno meno davanti!).
+                    </div>
+                    <div class="solution-step">
+                        <strong>3. Tabella dei segni:</strong>
+                        <br>Intervallo $(-\infty, 1/4]$: Num(-) / Den(-) = <span class="highlight">Positivo (+)</span> (Va bene $\geq 0$)
+                        <br>Intervallo $[1/4, 1]$: Num(0/+) / Den(-) = Negativo
+                        <br>Intervallo $[1, 2]$: Num(+) / Den(-) = Negativo
+                        <br>Intervallo $(2, 3)$: Num(+) / Den(+) = <span class="highlight">Positivo (+)</span> (Va bene)
+                        <br>Intervallo $[3, +\infty)$: Num(+) / Den(-) = Negativo
+                    </div>
+                    <div class="solution-step">
+                        <strong>4. Soluzione Finale:</strong>
+                        $$ (-\infty, \frac{1}{4}] \cup (2, 3) $$
+                        <br>(Nota: 2 e 3 sono esclusi perché sono al denominatore, 1/4 è incluso perché il numeratore è 0).
+                    </div>
+                </details>
+            </div>
+
+            <!-- Esercizio 4 -->
+            <div class="exercise-card">
+                <div class="exercise-title">Esercizio 4 (2 punti)</div>
+                <div class="problem-text">Risolvi il sistema: $$ \left\{ \begin{array}{l} \frac{7x + 4}{6} - \frac{x^2}{3} > 0 \\ 2x^2 - 3x + 5 < 0 \end{array} \right. $$</div>
+                
+                <details>
+                    <summary>👇 Clicca qui per lo Svolgimento</summary>
+                    <div class="solution-step">
+                        <strong>1. Prima disequazione:</strong> Moltiplico tutto per 6.
+                        $$ (7x + 4) - 2x^2 > 0 \implies -2x^2 + 7x + 4 > 0 $$
+                        Moltiplico per -1 (cambio verso): $2x^2 - 7x - 4 < 0$.
+                        Radici: $x = \frac{7 \pm 9}{4} \implies x_1 = 4, x_2 = -1/2$.
+                        Sol: $$ -\frac{1}{2} < x < 4 $$
+                    </div>
+                    <div class="solution-step">
+                        <strong>2. Seconda disequazione:</strong> $2x^2 - 3x + 5 < 0$.
+                        Calcolo il $\Delta = 9 - 4(2)(5) = 9 - 40 = -31$.
+                        Poiché $\Delta < 0$ e $a>0$, la parabola è sempre sopra l'asse.
+                        Non ha soluzione per la condizione "< 0".
+                        Sol: $$ \emptyset $$
+                    </div>
+                    <div class="solution-step">
+                        <strong>3. Sistema:</strong> Intersezione tra $(-\frac{1}{2}, 4)$ e $\emptyset$.
+                        Sol: $$ \emptyset $$
+                    </div>
+                </details>
+            </div>
+
+             <!-- Esercizio 5 -->
+             <div class="exercise-card">
+                <div class="exercise-title">Esercizio 5 (2 punti)</div>
+                <div class="problem-text">Scegli 1 tra i seguenti problemi:</div>
+                
+                <details>
+                    <summary>👇 Soluzione Problema A</summary>
+                    <div class="solution-step">
+                        <strong>Testo:</strong> Trova i due più piccoli multipli di 3 consecutivi il cui prodotto sia > 720.
+                        Sia $x$ il multiplo, il successivo è $x+3$.
+                    </div>
+                    <div class="solution-step">
+                        $$ x(x+3) > 720 \implies x^2 + 3x - 720 > 0 $$
+                        Radici: $x \approx 25.3$ e $x \approx -28.3$.
+                        Sol: $x < -28.3$ oppure $x > 25.3$.
+                        <br>Cercando multipli di 3 interi:
+                        <br>Positivi: 27 e 30 (Prodotto 810).
+                        <br>Negativi: -30 e -33 (Prodotto 990).
+                        <br>Risposta (più comuni): <strong>27 e 30</strong>.
+                    </div>
+                </details>
+                
+                <details>
+                    <summary>👇 Soluzione Problema B</summary>
+                    <div class="solution-step">
+                        <strong>Testo:</strong> Base $B$, Altezza $h$. $B = 3h + 2$.
+                        Condizioni:
+                        1. Area $B \cdot h \leq 16 \implies (3h+2)h \leq 16 \implies 3h^2+2h-16 \leq 0$.
+                        2. Perimetro $2(B+h) \leq 48 \implies 2(4h+2) \leq 48 \implies 4h+2 \leq 24 \implies h \leq 5.5$.
+                    </div>
+                    <div class="solution-step">
+                        Risolvendo $3h^2+2h-16 \leq 0$: Radici $h=2$ e $h=-8/3$.
+                        Sol: $[-8/3, 2]$.
+                        Intersezione con $h \leq 5.5$ e $h>0$:
+                        <br><strong>Sol: $0 < h \leq 2$.</strong>
+                        <br>Il valore massimo dell'altezza è 2 dm.
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <!-- ==================== VERIFICA B ==================== -->
+        <div id="tabB" class="tab-content">
+            <h1>Verifica: Disequazioni di Secondo Grado (B)</h1>
+            <p style="text-align: center; color: #7f8c8d;">Numerazione corretta e schemi di risoluzione.</p>
+
+            <!-- Esercizio 1 -->
+            <div class="exercise-card">
+                <div class="exercise-title">Esercizio 1 (1,5 punti)</div>
+                <div class="problem-text">Risolvi: $$(2 - 3x)^{2} \geq -x + 2$$</div>
+                
+                <details>
+                    <summary>👇 Clicca qui per lo Svolgimento</summary>
+                    <div class="solution-step">
+                        <strong>1. Sviluppo:</strong> Il quadrato è lo stesso dell'Esercizio A n.1.
+                        $$ 4 - 12x + 9x^2 \geq -x + 2 $$
+                    </div>
+                    <div class="solution-step">
+                        <strong>2. Riordino:</strong>
+                        $$ 9x^2 - 11x + 2 \geq 0 $$
+                    </div>
+                    <div class="solution-step">
+                        <strong>3. Confronto:</strong> Le radici sono le stesse ($2/9$ e $1$), ma ora il verso è <strong>$\geq$</strong>.
+                    </div>
+                    <div class="solution-step">
+                        <strong>4. Soluzione:</strong> Per un "$\geq$" con $a>0$, la soluzione è <strong>interna esclusa</strong> (o esterna inclusa).
+                        $$ x \leq \frac{2}{9} \quad \text{o} \quad x \geq 1 $$
+                        <br>Intervallo: $$ (-\infty, \frac{2}{9}] \cup [1, +\infty) $$
+                    </div>
+                </details>
+            </div>
+
+            <!-- Esercizio 2 -->
+            <div class="exercise-card">
+                <div class="exercise-title">Esercizio 2 (2 punti)</div>
+                <div class="problem-text">Risolvi le disequazioni date, deducendo le soluzioni dai rispettivi grafici di funzione.</div>
+                
+                <div class="graph-container">
+                    <span class="graph-label">Grafico F1.png</span>
+                    <img src="F1.png" alt="Grafico funzione 1">
+                </div>
+                <details>
+                    <summary>👇 Soluzioni per F1.png</summary>
+                    <ul>
+                        <li><strong>a. $f(x) \leq 0$:</strong> $x \leq 1 \lor 2 \leq x \leq 3$</li>
+                        <li><strong>b. $f(x) > 1$:</strong> $x > \frac{10}{3}$</li>
+                        <li><strong>c. $0 < f(x) < 1$:</strong> $1 < x < 2 \lor 3 < x < \frac{10}{3}$</li>
+                        <li><strong>d. $f(x) < -2$:</strong> $x < \frac{1}{2}$</li>
+                    </ul>
+                </details>
+
+                <div class="graph-container" style="margin-top: 20px;">
+                    <span class="graph-label">Grafico F2.png</span>
+                    <img src="F2.png" alt="Grafico funzione 2">
+                </div>
+                <details>
+                    <summary>👇 Soluzioni per F2.png</summary>
+                    <ul>
+                        <li><strong>a. $f(x) \leq 0$:</strong> $\frac{1}{2} \leq x \leq 2$</li>
+                        <li><strong>b. $f(x) = \frac{5}{2}$:</strong> $x = -\frac{1}{2}$</li>
+                        <li><strong>c. $f(x) < \frac{5}{2}$:</strong> $x > -\frac{1}{2}$</li>
+                        <li><strong>d. $f(x) \geq -\frac{9}{16}$:</strong> Sempre vera</li>
+                    </ul>
+                </details>
+            </div>
+
+            <!-- Esercizio 3 -->
+            <div class="exercise-card">
+                <div class="exercise-title">Esercizio 3 (2 punti)</div>
+                <div class="problem-text">Risolvi: $$ \frac{5x - 6 - x^2}{4x^2 - 5x + 1} \leq 0 $$</div>
+                
+                <details>
+                    <summary>👇 Clicca qui per lo Svolgimento</summary>
+                    <div class="solution-step">
+                        <strong>Analisi:</strong> Questa è l'inversa della disequazione A n.3. Il segno da risolvere è invertito.
+                    </div>
+                    <div class="solution-step">
+                        <strong>Numeratore:</strong> $-(x-2)(x-3)$. Segno: (-) fuori da [2,3], (+) dentro.
+                    </div>
+                    <div class="solution-step">
+                        <strong>Denominatore:</strong> $(4x-1)(x-1)$. Segno: (+) fuori da [1/4, 1], (-) dentro.
+                    </div>
+                    <div class="solution-step">
+                        <strong>Quoziente $\leq$ 0:</strong> Segni opposti.
+                        <br>1. Num(-), Den(+): $(-\infty, 1/4)$
+                        <br>2. Num(+), Den(-): $(2, 3)$ con $(1/4, 1)$ -> No intersezione.
+                        <br>3. Numeratore zero in [2,3] (positivo dentro). Denominatore positivo in (1,2). Quindi anche in $(1,2)$ abbiamo Pos/PoS = Pos.
+                        <br><em>Correzione passaggio:</em> Controlliamo gli intervalli uno per uno.
+                        <br>$x=0 \to$ Num(-), Den(+) = <span class="highlight">Positivo</span>. (Errore nel controllo rapido).
+                        <br>Calcolo preciso:
+                        <br>1. $(-\infty, 1/4]$: Num(-), Den(+) $\to$ Quoziente (-). <strong>OK</strong>.
+                        <br>2. $(1/4, 1)$: Num(-), Den(-) $\to$ Quoziente (+).
+                        <br>3. $(1, 2]$: Num(-), Den(+) $\to$ Quoziente (-). <strong>OK</strong>. (2 incluso perché numeratore 0).
+                        <br>4. $(2, 3)$: Num(+), Den(+) $\to$ Quoziente (+).
+                        <br>5. $[3, \infty)$: Num(-), Den(+) $\to$ Quoziente (-). <strong>OK</strong>.
+                    </div>
+                    <div class="solution-step">
+                        <strong>Soluzione Finale:</strong>
+                        $$ (-\infty, \frac{1}{4}] \cup (1, 2] \cup [3, +\infty) $$
+                    </div>
+                </details>
+            </div>
+
+            <!-- Esercizio 4 -->
+            <div class="exercise-card">
+                <div class="exercise-title">Esercizio 4 (2 punti)</div>
+                <div class="problem-text">Sistema: $$ \left\{ \begin{array}{l} - \frac{x^2}{2} + \frac{7x + 4}{4} > 0 \\ x^2 - 4x + 4 < 0 \end{array} \right. $$</div>
+                
+                <details>
+                    <summary>👇 Clicca qui per lo Svolgimento</summary>
+                    <div class="solution-step">
+                        <strong>1. Prima disequazione:</strong> Moltiplico tutto per 4.
+                        $$ -2x^2 + 7x + 4 > 0 \implies 2x^2 - 7x - 4 < 0 $$
+                        Stessa equazione dell'Esercizio A n.4.
+                        Sol: $$ -\frac{1}{2} < x < 4 $$
+                    </div>
+                    <div class="solution-step">
+                        <strong>2. Seconda disequazione:</strong>
+                        $$ (x-2)^2 < 0 $$
+                        Il quadrato di un numero reale non può mai essere negativo.
+                        Sol: $$ \emptyset $$
+                    </div>
+                    <div class="solution-step">
+                        <strong>3. Sistema:</strong> Intersezione con insieme vuoto.
+                        Sol: $$ \emptyset $$
+                    </div>
+                </details>
+            </div>
+
+             <!-- Esercizio 5 -->
+             <div class="exercise-card">
+                <div class="exercise-title">Esercizio 5 (2 punti)</div>
+                <div class="problem-text">Stesso enunciato della verifica A. Soluzioni riportate qui di seguito.</div>
+                <details>
+                    <summary>👇 Soluzione Rapida</summary>
+                    <div class="solution-step">
+                        <strong>Opzione a:</strong> Multipli 27 e 30.
+                        <br><strong>Opzione b:</strong> Altezza massima $h = 2$ dm.
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <!-- ==================== RIEPILOGO ==================== -->
+        <div id="tabSummary" class="tab-content">
+            <h1>Riepilogo Soluzioni</h1>
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>Esercizio</th>
+                        <th>Soluzione Finale</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Riepilogo A -->
+                    <tr>
+                        <td><strong>Verifica A - Esercizio 1</strong><br><small>Inquadrata</small></td>
+                        <td>$x \in [\frac{2}{9}, 1]$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Verifica A - Esercizio 2</strong><br><small>Letture grafici</small></td>
+                        <td>
+                            <strong>F1.png:</strong> a) $x \leq 1 \lor 2 \leq x \leq 3$ | b) $x > 10/3$ | c) $1 < x < 2 \lor 3 < x < 10/3$ | d) $x < 1/2$<br>
+                            <strong>F2.png:</strong> a) $1/2 \leq x \leq 2$ | b) $x = -1/2$ | c) $x > -1/2$ | d) Sempre vera
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Verifica A - Esercizio 3</strong><br><small>Fratta</small></td>
+                        <td>$x \in (-\infty, \frac{1}{4}] \cup (2, 3)$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Verifica A - Esercizio 4</strong><br><small>Sistema</small></td>
+                        <td>$\emptyset$ (Insieme Vuoto)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Verifica A - Esercizio 5</strong><br><small>Problema</small></td>
+                        <td>a) 27, 30 | b) $h \in (0, 2]$</td>
+                    </tr>
+
+                    <!-- Riepilogo B -->
+                    <tr>
+                        <td><strong>Verifica B - Esercizio 1</strong><br><small>Inquadrata</small></td>
+                        <td>$x \in (-\infty, \frac{2}{9}] \cup [1, +\infty)$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Verifica B - Esercizio 2</strong><br><small>Letture grafici</small></td>
+                        <td>
+                            <strong>F1.png:</strong> a) $x \leq 1 \lor 2 \leq x \leq 3$ | b) $x > 10/3$ | c) $1 < x < 2 \lor 3 < x < 10/3$ | d) $x < 1/2$<br>
+                            <strong>F2.png:</strong> a) $1/2 \leq x \leq 2$ | b) $x = -1/2$ | c) $x > -1/2$ | d) Sempre vera
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Verifica B - Esercizio 3</strong><br><small>Fratta (Inversa)</small></td>
+                        <td>$x \in (-\infty, \frac{1}{4}] \cup (1, 2] \cup [3, +\infty)$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Verifica B - Esercizio 4</strong><br><small>Sistema (Quadrato perfetto)</small></td>
+                        <td>$\emptyset$ (Insieme Vuoto)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Verifica B - Esercizio 5</strong><br><small>Problema</small></td>
+                        <td>Identiche alla A.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="fixed-summary-bar">
+        Verifica Corretta: Disequazioni di Secondo Grado | Usa i dettagli per studiare!
+    </div>
+
+    <script>
+        function openTab(tabId) {
+            // Nascondi tutti i tab
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Rimuovi classe active dai bottoni
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Attiva il tab scelto
+            document.getElementById(tabId).classList.add('active');
+            
+            // Attiva il bottone corrispondente
+            if(tabId === 'tabA') buttons[0].classList.add('active');
+            if(tabId === 'tabB') buttons[1].classList.add('active');
+            if(tabId === 'tabSummary') buttons[2].classList.add('active');
+            
+            // Scroll in alto
+            window.scrollTo(0,0);
+        }
+    </script>
+</body>
+</html>
